@@ -18,12 +18,8 @@ body
 	text-align: center;
 }
 
-#player{
+#player, #enemy{
 	display: block;
 	margin: -500px auto 0px;
 }
 
-#enemy{
-	display: block;
-	
-}
