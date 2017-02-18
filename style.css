@@ -3,10 +3,9 @@ body
 	background: #333;
 }
 
-#map
+canvas
 {
-	display: block;
-	background: #fff;
+	display: block;	
 	margin: 30px auto 0px;
 }
 
@@ -18,7 +17,7 @@ body
 	text-align: center;
 }
 
-#player, #enemy{
+#player, #enemy, #stats{
 	display: block;
 	margin: -500px auto 0px;
 }

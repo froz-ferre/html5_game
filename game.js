@@ -9,6 +9,9 @@ var ctxPlayer;
 var enemyCv;
 var ctxEnemy;
 
+var stats;
+var ctxStats;
+
 var drawBtn;
 var clearBtn;
 
@@ -16,6 +19,12 @@ var player;
 var enemies = [] ;
 
 var isPlaying;
+
+//For creating enemies
+var spawnInterval;
+var spawnTime = 6000;	// 6 sec = 6000 Msec
+var spawnAmount = 3;
+
 
 var requestAnimatFrame = 	window.requestAnimationFrame ||
 							window.webkitRequestAnimationFrame ||
@@ -42,6 +51,9 @@ function init(){
 	enemyCv = document.getElementById("enemy");
 	ctxEnemy = enemyCv.getContext("2d");
 
+	stats = document.getElementById("stats");
+	ctxStats = enemyCv.getContext("2d");
+
 
 	map.width = gameWidth;
 	map.height = gameHeight;
@@ -51,6 +63,12 @@ function init(){
 
 	enemyCv.width = gameWidth;
 	enemyCv.height = gameHeight;
+
+	stats.width = gameWidth;
+	stats.gameHeight = gameHeight;
+
+	ctxStats.fillStyle = "#FFFFFF";
+	ctxStats.font = "bold 15pt Arial";
 
 	drawBtn = document.getElementById("drawBtn");
 	clearBtn = document.getElementById("clearBtn");
@@ -62,8 +80,9 @@ function init(){
 
 	drawBg();
 	startLoop();
+	updateStats();
 
-	spawnEnemy(5);
+	//spawnEnemy(5);
 
 	document.addEventListener("keydown", checkKeyDown, false);
 	document.addEventListener("keyup", checkKeyUp, false);
@@ -74,6 +93,16 @@ function spawnEnemy(count){
 		enemies[i] = new Enemy();	
 	}
 }
+
+function startCreatingEnemies(){
+	stopCreatingEnemies();
+	spawnInterval = setInterval(function(){spawnEnemy(spawnAmount)}, spawnTime)
+}
+
+function stopCreatingEnemies(){
+	clearInterval(spawnInterval);
+}
+
 function loop(){
 	if(isPlaying){
 		draw();
@@ -85,6 +114,7 @@ function loop(){
 function startLoop(){
 	isPlaying = true;
 	loop();
+	startCreatingEnemies();
 }
 
 function stopLoop(){
@@ -144,11 +174,13 @@ Enemy.prototype.draw = function() {
 Enemy.prototype.update = function() {
 	// body...
 	this.drawX -= 7;
-	if(this.drawX < 0){
-		this.drawX = Math.floor(Math.random() * gameWidth) + gameWidth; 
-		this.drawY = Math.floor(Math.random() * (gameHeight - 85));
-	}
+	if(this.drawX + this.width < 0)
+		this.destroy();
 };
+
+Enemy.prototype.destroy = function() {
+	enemies.splice(enemies.indexOf(this), 1);
+}
 
 Player.prototype.draw = function() {
 	// body...
@@ -246,6 +278,11 @@ function clearCtxPlayer(){
 
 function clearCtxEnemy(){
 	ctxEnemy.clearRect(0, 0, gameWidth, gameHeight);
+}
+
+function updateStats(){
+	ctxStats.clearRect(0, 0, gameWidth, gameHeight);
+	ctxStats.fillText("Player", 30, 30);
 }
 
 function drawBg(){
