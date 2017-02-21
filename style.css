@@ -5,11 +5,12 @@ body
 
 canvas
 {
-	display: block;	
+	display: block;
 	margin: 30px auto 0px;
 }
 
-#gameName{
+#gameName
+{
 	color: #fff;
 	font-family: Courier;
 	font-weight: bold;
@@ -17,7 +18,8 @@ canvas
 	text-align: center;
 }
 
-#player, #enemy, #stats{
+#player, #enemy, #stats
+{
 	display: block;
 	margin: -500px auto 0px;
 }
