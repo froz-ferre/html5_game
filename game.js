@@ -39,6 +39,9 @@ var gameHeight = 500;
 var background = new Image();
 background.src = "img/bg.png";
 
+var background1 = new Image();
+background1.src = "img/bg.png";
+
 var tiles = new Image();
 tiles.src = "img/tiles.png";
 
@@ -80,7 +83,6 @@ function init(){
 	player = new Player();
 	health = 100;
 
-	drawBg();
 	startLoop();
 
 	//spawnEnemy(5);
@@ -131,6 +133,7 @@ function draw(){
 }
 
 function update(){
+	drawBg();
 	updateStats();
 	player.update();
 	for (var i = 0; i < enemies.length; i++) {
