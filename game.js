@@ -21,6 +21,9 @@ var enemies = [] ;
 var isPlaying;
 var health;
 
+var mapX = 0;
+var mapBg1X = gameWidth;
+
 //For creating enemies
 var spawnInterval;
 var spawnTime = 6000;	// 6 sec = 6000 Msec
@@ -133,12 +136,21 @@ function draw(){
 }
 
 function update(){
+	mooveBg();
 	drawBg();
 	updateStats();
 	player.update();
 	for (var i = 0; i < enemies.length; i++) {
 		enemies[i].update();
 	}
+}
+
+function mooveBg(){
+	var vel = 4;
+	mapX -= 4;
+	mapBg1X -=4;
+	if (mapX+gameWidth < 0) mapX = gameWidth-5;
+	if (mapBg1X+gameWidth < 0) mapBg1X = gameWidth-5;
 }
 
 // Objects
@@ -300,6 +312,9 @@ function updateStats(){
 }
 
 function drawBg(){
+	ctxMap.clearRect(0, 0, gameWidth, gameHeight);
 	ctxMap.drawImage(background, 0, 0, gameWidth, gameHeight,
-	0, 0, gameWidth, gameHeight);
+	mapX, 0, gameWidth, gameHeight);
+	ctxMap.drawImage(background1, 0, 0, gameWidth, gameHeight,
+	mapBg1X, 0, gameWidth, gameHeight);
 }
